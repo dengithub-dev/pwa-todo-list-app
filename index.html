@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#000000"/>
+		<meta name="description" content="PWA Todo App"/>
+		<link rel="apple-touch-icon" href="fav.png"/>
+        <link rel="icon" type="image/png" href="fav.png" />
+        <title>PWA Todo App</title>
+        <link rel="manifest" href="manifest.json">
+        <!-- Font Awesome icons (free version)-->
+        <script src="fontawesome/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <script src="jquery-3.6.0.min.js"></script>
+        <style>
+             body {
+                font-family: Roboto;
+                background: #f7f7f7
+            }
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 2px
+            }
+
+            h1 {
+                background: #1b8a2d;
+                color: white;
+                margin: 0;
+                padding: 10px 20px;
+                text-transform: uppercase;
+                font-size: 24px;
+                font-weight: normal
+            }
+
+            .fa-plus {
+                float: right
+            }
+
+            li {
+                background: #fff;
+                height: 40px;
+                line-height: 40px;
+                color: #088F8F;
+                word-wrap: break-word
+            }
+
+            li:nth-child(2n) {
+                background: #f7f7f7
+            }
+
+            span {
+                background: #e74c3c;
+                height: 40px;
+                margin-right: 20px;
+                text-align: center;
+                color: white;
+                width: 0;
+                display: inline-block;
+                transition: 0.2s linear;
+                opacity: 0
+                
+            }
+
+            li:hover span {
+                width: 40px;
+                opacity: 1.0
+            }
+
+            input {
+                font-size: 22px;
+                color: #2980b9;
+                background-color: #f7f7f7;
+                width: 100%;
+                padding: 13px 13px 13px 20px;
+                box-sizing: border-box;
+                border: 3px solid rgba(0, 0, 0, 0)
+            }
+
+            input:focus {
+                background: #fff;
+                border: 3px solid #2980b9;
+                outline: none
+            }
+
+            #container {
+                margin: 100px auto;
+                background: #f7f7f7;
+                box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+                width: 70%;
+            }
+
+            .completed {
+                color: gray;
+                text-decoration: line-through
+            }
+            
+        </style>
+        
+    </head>
+    <body>
+        <div id="container">
+            <h1>PWA TODO <i class="fa fa-plus"></i></h1> <input type="text" placeholder="Add New Todo">
+            <ul>
+                <!--Todo list values will be in here...-->
+            </ul>
+        </div>
+        <script>
+            $(document).ready(function(){
+            // for the setting of strike <li>
+            $("ul").on("click", "li", function(){
+            $(this).toggleClass("completed");
+            });
+
+            // for the remove button <span>
+            $("ul").on("click", "span", function(event){
+            $(this).parent().fadeOut(500,function(){
+            $(this).remove();
+            });
+            event.stopPropagation();
+            });
+            // if hit enter, then will add a todo list
+            $("input[type='text']").keypress(function(event){
+            if(event.which === 13){
+                var todoText = $(this).val();
+                //if input text is not empty, the text value append
+                if (todoText !== ""){
+                    //check if todoText have duplicated entry or not
+                    
+                    $(this).val("");
+                    $("ul").append("<li><span><i class='fa fa-trash'></i></span> " + todoText + "</li>")
+                }
+            }
+            });
+            //toggle the input text if the + button is clicked
+            $(".fa-plus").click(function(){
+            $("input[type='text']").fadeToggle();
+            });
+            });
+        </script>
+        <script src="index.js"></script>
+    </body>
+</html>
